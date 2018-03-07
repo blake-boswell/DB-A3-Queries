@@ -20,3 +20,7 @@ SELECT DISTINCT Employee.Name, Trip.Dep_Date, Trip.To_City, Expense.Submitted FR
 JOIN Trip ON Expense.Trip_ID = Trip.ID 
 JOIN Employee ON Trip.Emp_ID = Employee.ID
 ORDER BY Employee.Name;
+
+-- Print the costs (Estimated and actual) and corresponding trip ID's for the trips where the estimated cost is less than the actual expense
+-- OUTPUT: Trip.Est_Cost, Expense.Amount, Expense.Trip_ID
+SELECT DISTINCT Trip.ID, Trip.Est_Cost, Expense.Amount FROM Trip JOIN Expense ON Trip.ID = Expense.Trip_ID WHERE Trip.Est_Cost < Expense.Amount ORDER BY Trip.ID;
