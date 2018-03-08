@@ -5,10 +5,12 @@ SELECT Type, SUM(Amount) FROM Expense GROUP BY Type ORDER BY SUM(Amount) ASC;
 -- Show the total # of trips approved for employees of ea. department. If no employees have any approved trip, the dept. info should not appear
 -- OUTPUT: Department names and total number of trips
 SELECT Dept.Name, COUNT(Expense.Trip_ID) FROM
-Expense JOIN 
-(Trip JOIN (Employee JOIN Dept ON Dept.Code = Employee.Dept) ON Trip.Emp_ID = Employee.ID)
+Expense JOIN Trip 
 ON Expense.Trip_ID = Trip.ID 
-GROUP BY Dept.Name; 
+JOIN Employee ON Trip.Emp_ID = Employee.ID 
+JOIN Dept ON Dept.Code = Employee.Dept
+GROUP BY Dept.Name;
+ 
 
 -- Show the number of distinct days when a departure and a return occur on the same day (Don't need to be from same trip)
 -- OUTPUT: Number of times we get a departure and return date occurring on the same day
@@ -23,4 +25,4 @@ ORDER BY Employee.Name;
 
 -- Print the costs (Estimated and actual) and corresponding trip ID's for the trips where the estimated cost is less than the actual expense
 -- OUTPUT: Trip.Est_Cost, Expense.Amount, Expense.Trip_ID
-SELECT DISTINCT Trip.ID, Trip.Est_Cost, Expense.Amount FROM Trip JOIN Expense ON Trip.ID = Expense.Trip_ID WHERE Trip.Est_Cost < Expense.Amount ORDER BY Trip.ID;
+SELECT Trip.ID, Trip.Est_Cost, Expense.Amount FROM Trip JOIN Expense ON Trip.ID = Expense.Trip_ID WHERE Trip.Est_Cost < Expense.Amount ORDER BY Expense.Amount;
