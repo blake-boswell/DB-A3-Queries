@@ -19,12 +19,12 @@ SELECT DISTINCT COUNT(*) FROM Trip A JOIN Trip B ON A.Return_Date = B.Dep_Date;
 -- Show the corresponding employee name, departure date, name of the city visited, and the recipt submission date for ea. approved trip
 -- OUTPUT: Employee.Name, Trip.Dep_Date, Trip.To_City, Expense.Submitted for ea. Trip in the Expense Table
 SELECT DISTINCT Employee.Name, Trip.Dep_Date, Trip.To_City, Expense.Submitted FROM Expense 
-JOIN Trip ON Expense.Trip_ID = Trip.ID 
+LEFT JOIN Trip ON Expense.Trip_ID = Trip.ID 
 JOIN Employee ON Trip.Emp_ID = Employee.ID
 ORDER BY Employee.Name;
 
 -- Print the costs (Estimated and actual) and corresponding trip ID's for the trips where the estimated cost is less than the actual expense
 -- OUTPUT: Trip.Est_Cost, Expense.Amount, Expense.Trip_ID
-SELECT Trip.ID, Trip.Est_Cost, Expense.Amount FROM Trip JOIN Expense ON Trip.ID = Expense.Trip_ID WHERE Trip.Est_Cost < Expense.Amount ORDER BY Expense.Amount;
+-- SELECT Trip.ID, Trip.Est_Cost, Expense.Amount FROM Trip JOIN Expense ON Trip.ID = Expense.Trip_ID WHERE Trip.Est_Cost < Expense.Amount ORDER BY Expense.Amount;
 -- If it is the sum of all the expenses for a trip
 SELECT Trip.ID, Trip.Est_Cost, SUM(Expense.Amount) FROM Trip JOIN Expense ON Trip.ID = Expense.Trip_ID GROUP BY Trip.ID, Trip.Est_Cost HAVING Trip.Est_Cost < SUM(Expense.Amount) ORDER BY Trip.ID;
