@@ -26,3 +26,5 @@ ORDER BY Employee.Name;
 -- Print the costs (Estimated and actual) and corresponding trip ID's for the trips where the estimated cost is less than the actual expense
 -- OUTPUT: Trip.Est_Cost, Expense.Amount, Expense.Trip_ID
 SELECT Trip.ID, Trip.Est_Cost, Expense.Amount FROM Trip JOIN Expense ON Trip.ID = Expense.Trip_ID WHERE Trip.Est_Cost < Expense.Amount ORDER BY Expense.Amount;
+-- If it is the sum of all the expenses for a trip
+SELECT Trip.ID, Trip.Est_Cost, SUM(Expense.Amount) FROM Trip JOIN Expense ON Trip.ID = Expense.Trip_ID GROUP BY Trip.ID, Trip.Est_Cost HAVING Trip.Est_Cost < SUM(Expense.Amount) ORDER BY Trip.ID;
